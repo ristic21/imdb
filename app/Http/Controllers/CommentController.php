@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 
-class MovieController extends Controller
+class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
-        return view('movies', compact("movies"));
+        //
     }
 
     /**
@@ -27,43 +27,40 @@ class MovieController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
-            'genre' => 'required|string',
-            'year' => 'required|date|after:12/1900',
-            'storyline' => 'max:5000'
+            'content' => 'required',
+            'movie_id' => 'required|exists:movies,id'
         ]);
 
-        $movie = new Movie();
-        $movie->title = $request->title;
-        $movie->genre = $request->genre;
-        $movie->year = $request->year;
-        $movie->director = $request->director;
-        $movie->storyline = $request->storyline;
-        $movie->save();
+        $comment = new Comment();
+        $comment->content = $request->content;
 
-        return redirect('add')->with('status', 'Movie successfully added!');
+        $movie = Movie::find($request->movie_id);
+        $comment->movie()->associate($movie)->save();
+
+        $comment->save();
+
+        return redirect('movies')->with('status', 'Comment successfully added!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $movie = Movie::find($id);
-        return view('movie', compact("movie"));
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Movie  $movie
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -71,10 +68,10 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Movie  $movie
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Movie $movie)
+    public function destroy($id)
     {
         //
     }
