@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GenresController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\SidebarController;
 use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::post('/movies/add',[CommentController::class, 'store']);
 
 Route::get('/genres/{genre}', [GenresController::class, 'show']);
 Route::get('/genres', [GenresController::class, 'index']);
-
+Route::get('/genres', [SidebarController::class, 'index']);
+Route::get('/', [SidebarController::class, 'index2']);
 
 

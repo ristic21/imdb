@@ -7,7 +7,7 @@
  
     </body>
     
-    @include('layout.sidebar')
+   
     @include('layout.footer')
 
 

@@ -8,7 +8,7 @@
     <h1>Title: {{$movie->title}}</h1>
     <h4>Director: {{$movie->director}}</h4>
     <p>Storyline: {{$movie->storyline}}</p>
-    <p>Storyline: <a href="/genres/:{{$movie->genre}}">{{$movie->genre}}</a> </p>
+    <p>Storyline: <a href="/genres">{{$movie->genre}}</a> </p>
 </div>
 @foreach ($movie->comments as $comment)
 <div class="card mb-4">
